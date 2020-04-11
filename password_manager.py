@@ -7,7 +7,7 @@ import datetime
 from datetime import date, timedelta
 from time import sleep
 import readline
-from pyautogui import typewrite
+import pyperclip
 
 class bcolors:
   HEADER = '\033[95m'
@@ -30,15 +30,17 @@ with open(passwords_file_location) as f:
 
 def help():
   print("""
-   __________________________________________________
-  |  keyword    |   action                            |
-  |  --------------------------                       |
-  |  view              To view all Domain             |
-  |  view {domain}     To view Spacific Domain        |
-  |  del  {domain->*}  To detele domain               |
-  |  del  {domain->id} To delete id pass from domain  |
-  |  edit {domain->id} To edit id and password        |
-  |___________________________________________________|
+   ____________________________________________________
+  |  keyword           | action                        |
+  |  -----------------------------------------------   |
+  |  view              | To view all Domain            |
+  |  view {domain}     | To view Spacific Domain       |
+  |  del  {domain->*}  | To detele domain              |
+  |  del  {domain->id} | To delete id pass from domain |
+  |  edit {domain->id} | To edit id and password       |
+  |  copy {domain->id} | To copy pass into clipboard   |
+  |  clear             | To clear screen               |
+  |____________________________________________________|
   """)
 
 def view_domain(domain):
@@ -138,7 +140,7 @@ def edit_id_pass(domain):
       list_of_id.append(json_data[domain][ids]["id"])
     readline.parse_and_bind("tab: complete")
     readline.set_completer(id_completor)
-    idInput = input("\n\tEner id : ")
+    idInput = input("\n\tEnter id : ")
     if idInput in list_of_id:
       indexOfId = list_of_id.index(idInput)
       items = json_data[domain][indexOfId].items() # * .index(item Val) get item number from list
@@ -168,6 +170,29 @@ def edit_id_pass(domain):
   else:
     print(f"\n\t{bcolors.FAIL}✖{bcolors.ENDC} Domain not exist")
 
+
+def copy_password(domain):
+  if domain in json_data:
+    list_of_id = []
+    def id_completor(text, state):
+      options = [i for i in list_of_id if i.startswith(text)]
+      if state < len(options):
+        return options[state]
+      else:
+        return None
+    for ids in range(len(json_data[domain])):
+      list_of_id.append(json_data[domain][ids]["id"])
+    readline.parse_and_bind("tab: complete")
+    readline.set_completer(id_completor)
+    idInput = input("\n\tEnter id : ")
+    if idInput in list_of_id:
+      indexOfId = list_of_id.index(idInput)
+      pyperclip.copy(json_data[domain][indexOfId]["pass"])
+      print(f"\n\t{bcolors.OKGREEN}✔{bcolors.ENDC} " + " Password Copied to clipboard")
+    else:
+      print(f"\n\t{bcolors.FAIL}✖{bcolors.ENDC} id not exist")
+  else:
+    print(f"\n\t{bcolors.FAIL}✖{bcolors.ENDC} Domain not exist")
 
 # Start
 # loadJsonFile()
@@ -219,6 +244,9 @@ while 1:
 
     elif first_word == "edit":
       edit_id_pass(second_word)
+
+    elif first_word == "copy":
+      copy_password(second_word)
 
   elif domain_input == "0" or domain_input == "exit":
     print(" :<\n")
