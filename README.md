@@ -1,25 +1,25 @@
 # Password Manger
 
-### What i can do with this python script ?
+### Features
 
-- Add Id and password of Different platforms into one json file
-- View Whole json file with formatted text
-- View Specific platform of id password with formatted text
+- Add Id, password and more custom filed you want
+- List all your account info in just one keyword
+- View Specific Domain of id password with formatted text
+- Tab compilation for existing domain and id
+- While adding password type "random" to generate random password
+- copy password to your clipboard without displaying password
 
-### Commands
-
-##### To View all id password
-
-####
-
-```
-view all
-```
-
-##### To View Specific platform id password
-
-####
+### Usage
 
 ```
-view gmail
+   ____________________________________________________
+  |  keyword           | action                        |
+  |  -----------------------------------------------   |
+  |  view              | To view all Domain            |
+  |  view {domain}     | To view Spacific Domain       |
+  |  del  {domain->*}  | To detele domain              |
+  |  del  {domain->id} | To delete id pass from domain |
+  |  edit {domain->id} | To edit id and password       |
+  |  copy {domain->id} | to copy pass into clipboard   |
+  |____________________________________________________|
 ```
