@@ -33,11 +33,6 @@ def help():
    __________________________________________________
   |  keyword    |   action                            |
   |  --------------------------                       |
-  |  1          |   Timeline.py                       |
-  |  2          |   passwordmanager.py                |
-  |  3          |   wantstoknow.py                    |
-  |  0          |   back to script                    |
-  |                                                   |
   |  view              To view all Domain             |
   |  view {domain}     To view Spacific Domain        |
   |  del  {domain->*}  To detele domain               |
