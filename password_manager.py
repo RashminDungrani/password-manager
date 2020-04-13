@@ -159,6 +159,25 @@ def edit_id_pass(domain):
             json_data[domain][indexOfId][key] = editedValue
 
             if loopCount == itemsLen:
+              isMoreFields = input("\n\tWant to add more fields (y) : ").lower()
+              print("\033[A"+ " "*50 +"\033[A")
+              isMoreId = "y"
+              while isMoreFields == "y":
+                print("\033[A"+ " "*50 +"\033[A")
+                field_name = input("field : ")
+
+                if field_name == "" or field_name == "0":
+                  isMoreFields = ""
+                else:
+                  print("\033[A"+ " "*50 +"\033[A") # * ansi escape arrow up then overwrite the line
+                  field_print = '{:>16} + '.format(field_name)
+                  field_val = input(field_print)
+                  if field_val == "" or field_name == "0":
+                    isMoreFields = ""
+                  else:
+                    domain_detail[field_name] = field_val
+                    isMoreFields = input("\n\tWant to add more fields (y) : ").lower()
+                    print("\033[A"+ " "*50 +"\033[A")
               with open(passwords_file_location,'w') as f:
                 json.dump(json_data,f)
               loadJsonFile()
@@ -192,6 +211,7 @@ def copy_password(domain):
       print(f"\n\t{bcolors.FAIL}✖{bcolors.ENDC} id not exist")
   else:
     print(f"\n\t{bcolors.FAIL}✖{bcolors.ENDC} Domain not exist")
+
 
 # Start
 # loadJsonFile()
@@ -289,9 +309,9 @@ while 1:
                 "id": id_input,
                 "pass":password_input
               }
+              json_data[domain_input].append(domain_detail)
               isMoreFields = input("\n\tWant to add more fields (y) : ").lower()
               print("\033[A"+ " "*50 +"\033[A")
-
               isMoreId = "y"
               while isMoreId == "y":
                 def addMoreId():
@@ -355,14 +375,14 @@ while 1:
                       print(f"\n\t{bcolors.FAIL}✖{bcolors.ENDC} Id cannot be empty")
 
                 if isMoreFields != "y":
-                  json_data[domain_input].append(domain_detail)
-                  with open(passwords_file_location,'w') as f:
-                    json.dump(json_data,f)
                   isMoreId = input("\tWant to add more id ? (y) : ").lower()
                   print("\033[A"+ " "*50 +"\033[A")
                   if isMoreId == "y":
                     addMoreId()
                   else:
+                    with open(passwords_file_location,'w') as f:
+                      json.dump(json_data,f)
+
                     print(f"\n\t{bcolors.OKGREEN}✔{bcolors.ENDC} Added")
 
                 else:
@@ -383,14 +403,13 @@ while 1:
                         isMoreFields = input("\n\tWant to add more fields (y) : ").lower()
                         print("\033[A"+ " "*50 +"\033[A")
 
-                  json_data[domain_input].append(domain_detail)
-                  with open(passwords_file_location,'w') as f:
-                    json.dump(json_data,f)
                   isMoreId = input("\tWant to add more id ? (y) : ").lower()
                   print("\033[A"+ " "*50 +"\033[A")
                   if isMoreId == "y":
                     addMoreId()
                   else:
+                    with open(passwords_file_location,'w') as f:
+                      json.dump(json_data,f)
                     print(f"\n\t{bcolors.OKGREEN}✔{bcolors.ENDC} Added")
 
           else:
@@ -418,6 +437,8 @@ while 1:
                 domain_input:[]
               }
 
+              json_data.update(new_platform)
+
               current_time = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
               domain_detail = {
@@ -425,7 +446,7 @@ while 1:
                 "id": id_input,
                 "pass":password_input
               }
-              json_data.update(new_platform)
+              json_data[domain_input].append(domain_detail)
               list_of_stored_domains.append(domain_input)
               isMoreFields = input("\n\tWant to add more fields ? (y) : ").lower()
               print("\033[A"+ " "*50 +"\033[A")
@@ -460,8 +481,6 @@ while 1:
                             json_data[domain_input].append(domain_detail)
                             with open(passwords_file_location,'w') as f:
                               json.dump(json_data,f)
-                            # isMoreId = input("\n\tWant to add more id ? (y) : ").lower()
-                            # print("\033[A"+ " "*50 +"\033[A")
 
                           else:
                             while isMoreFields == "y":
@@ -472,7 +491,7 @@ while 1:
                                 isMoreFields = ""
                               else:
                                 print("\033[A"+ " "*50 +"\033[A") # * ansi escape arrow up then overwrite the line
-                                field_print = '{:>16} + '.format(field_name)
+                                field_print = '{:>16} : '.format(field_name)
                                 field_val = input(field_print)
                                 if field_val == "" or field_name == "0":
                                   isMoreFields = ""
@@ -492,16 +511,16 @@ while 1:
                       print(f"\n\t{bcolors.FAIL}✖{bcolors.ENDC} Id cannot be empty")
 
                 if isMoreFields != "y":
-                  json_data[domain_input].append(domain_detail)
-                  with open(passwords_file_location,'w') as f:
-                    json.dump(json_data,f)
                   isMoreId = input("\tWant to add more id ? (y) : ").lower()
                   print("\033[A"+ " "*50 +"\033[A")
                   if isMoreId == "y":
                     addMoreId()
-                  else:
-                    print(f"\n\t{bcolors.OKGREEN}✔{bcolors.ENDC} Added " + domain_input)
 
+                  else:
+                    with open(passwords_file_location,'w') as f:
+                      json.dump(json_data,f)
+
+                    print(f"\n\t{bcolors.OKGREEN}✔{bcolors.ENDC} Added " + domain_input)
 
                 else:
                   while isMoreFields == "y":
@@ -521,16 +540,13 @@ while 1:
                         isMoreFields = input("\n\tWant to add more fields (y) : ").lower()
                         print("\033[A"+ " "*50 +"\033[A")
 
-
-                  json_data[domain_input].append(domain_detail)
-                  with open(passwords_file_location,'w') as f:
-                    json.dump(json_data,f)
-
                   isMoreId = input("\tWant to add more id ? (y) : ").lower()
                   print("\033[A"+ " "*50 +"\033[A")
                   if isMoreId == "y":
                     addMoreId()
                   else:
+                    with open(passwords_file_location,'w') as f:
+                      json.dump(json_data,f)
                     print(f"\n\t{bcolors.OKGREEN}✔{bcolors.ENDC} " + domain_input + " Domain Added ")
 
           else:
