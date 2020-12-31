@@ -1,0 +1,14 @@
+
+
+# TODO: instead of asking for more field, Show Direct print field : and wait for user if user input is "" then move one else add more field
+# TODO: in del and edit option change Enter id to Which id
+# TODO: Change no record found text to "Cross sign domain no exist in view {domain}"
+# TODO: add keyword del all to and Give warning message this will delete all your passwords permanantly Are you sure ? (y)
+# TODO: if new domain name enters in captial then Convert into small chars for tab completion to and also Print "INFO : It's better to use lower case for domain name"
+# TODO: pyperclip and other non pre installed modules should be installed before run this script so find the way to install before run program for github users
+# TODO: if password_input is random then generate 10 to 15 keyword random password
+# TODO: CreateAT convert to timestamp in json and store it also as TimtStamp
+# TODO: get Green Color Unicode and Add CHECKGREEN bcolors
+# TODO: Add lastModifiedAt after createdAt and change while edit opearation
+# TODO: Add fields archive 1 to not archive and 0 to archive and deleted ids archive property is 0
+# TODO: After Adding archive feature join to this words after Dirscription in Readme.md file "Deleted ids are automatically archived and can be inspected or restored at any moment."
