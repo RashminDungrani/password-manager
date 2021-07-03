@@ -2,12 +2,13 @@
 """ Quicker and easy to use password manager python script """
 
 import os
+from password_manager.Utils.util import *
 import sys
 import datetime
 from time import sleep
 import readline
 import pyperclip
-from utils import *
+
 
 class BColor:
     '''text background colors'''
@@ -19,6 +20,9 @@ class BColor:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+if not check_data_path_available():
+    exit
 
 passwords_data = get_password_data()
 
@@ -487,7 +491,3 @@ def password_manager():
                                 f"\n\t{BColor.FAIL}✖{BColor.ENDC} Password cannot be empty")
                 else:
                     print(f"\n\t{BColor.FAIL}✖{BColor.ENDC} Id cannot be empty")
-
-if __name__ == "__main__":
-    password_manager()
-    

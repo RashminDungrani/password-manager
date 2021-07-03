@@ -19,11 +19,23 @@ By utilizing a simple and minimal usage syntax, that requires a flat learning cu
 - While adding password type "random" to generate random password
 - copy password to your clipboard without displaying password
 
+## Installation
+
+- Python 3 or higher version supported
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Run
 
 ```bash
-python3 password_manager.py
+python run.py
 ```
+
+----------
+#### alias pypasswords="PATH OF THE run.py" # set alias
+----------
 
 ## Usage
 
