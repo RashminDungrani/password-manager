@@ -1,0 +1,7 @@
+{
+    "name": "Python: Module",
+    "type": "python",
+    "request": "launch",
+    "module": "uvicorn",
+    "args": ["sql_app.main:app","--reload"]
+}

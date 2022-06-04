@@ -26,6 +26,9 @@ class Domain(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     domain = Column(String, unique=True)
+    created_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime)
+    deleted_at = Column(DateTime)
 
     # children = relationship("Item", cascade="all,delete", backref="parent")
     # children = relationship("Item", backref="domain", passive_deletes=True) # same as above

@@ -36,5 +36,12 @@ class DomainCreate(DomainBase):
     pass
 
 
-class Domain(BaseModel):
+class DomainResponse(BaseModel):
     id: int
+    domain: str
+    created_at: datetime
+    updated_at: Union[datetime, None]
+    deleted_at: Union[datetime, None]
+
+    class Config:
+        orm_mode = True
