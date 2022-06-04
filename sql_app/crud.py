@@ -23,7 +23,6 @@ def get_item_by_username(db: Session, username: str):
 def create_item(db: Session, item: schemas.ItemCreate):
     domain_item = (
         db.query(models.Domain).filter(models.Domain.domain == item.domain_url).first()
-    
     )
 
     if not domain_item:
@@ -31,12 +30,12 @@ def create_item(db: Session, item: schemas.ItemCreate):
         db.add(domain_item)
         db.commit()
         db.refresh(domain_item)
-    
+
     db_item = models.Item(
-        username = item.username,
-        email = item.email,
-        password = item.password,
-        domain_id = domain_item.id,
+        username=item.username,
+        email=item.email,
+        password=item.password,
+        domain_id=domain_item.id,
     )
     db.add(db_item)
     db.commit()
@@ -45,11 +44,13 @@ def create_item(db: Session, item: schemas.ItemCreate):
 
 
 def delete_items_by_domain(db: Session, domain_id: int) -> list[schemas.Item]:
-    del_items = db.query(models.Item).filter(models.Item.domain_id == domain_id).all()
-    delete_q = models.Domain.__table__.delete().where(models.Domain.id == domain_id)
-    db.execute(delete_q) # type = <class 'sqlalchemy.engine.cursor.CursorResult'>
+    # TODO: set deleted_at and while reading ignore those entries
+    db.query(models.Domain).filter(models.Domain.id == domain_id).delete(
+        synchronize_session="fetch"
+    )
+
     db.commit()
-    return del_items
+    return []
 
 
 # domain
