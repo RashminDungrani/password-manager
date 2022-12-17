@@ -2,8 +2,6 @@ from datetime import datetime
 from typing import Optional
 
 from sqlalchemy import exc
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
 from sqlmodel import Session, delete, select
 
 from app.db.dependencies import get_db_session
@@ -31,11 +29,22 @@ class DomainDAO:
         domains = (self.session.execute(query)).scalars().all()
         return domains
 
+    def starts_with(self, starts_with: str, offset: Optional[int] = None, limit: Optional[int] = None) -> list[Domain]:
+        query = select(Domain).where(Domain.domain_name.startswith(starts_with)).offset(offset).limit(limit)
+        domains = (self.session.execute(query)).scalars().all()
+        return domains
+
+    def select_by_domain_name(self, domain_name: str) -> Domain | None:
+        query = select(Domain).where(Domain.domain_name == domain_name)
+        domain = (self.session.execute(query)).scalar_one_or_none()
+        return domain
+
     def insert(self, domain_input: str) -> Domain:
         try:
             domain: Domain = Domain(domain_name=domain_input)
             self.session.add(domain)
             self.session.commit()
+            self.session.refresh(domain)
             return domain
         except exc.IntegrityError as error:
             print(error.code, error.params)

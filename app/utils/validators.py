@@ -3,9 +3,12 @@ from pydantic import EmailStr
 from validators import domain
 
 
-def validate_email(value: str):
+def validate_email(value: str) -> EmailStr | None:
+    if value == "":
+        return None
     try:
-        return EmailStr.validate(value)
+        EmailStr.validate(value)
+        return EmailStr(value)
     except:
         raise typer.BadParameter("Email is not valid")
 

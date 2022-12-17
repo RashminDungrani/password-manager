@@ -8,7 +8,7 @@ from pydantic import AnyUrl
 from sqlmodel import Column, Enum, Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    pass
+    from app.models.credential_model import Credential
 
 
 class Domain(SQLModel, table=True):
@@ -21,4 +21,4 @@ class Domain(SQLModel, table=True):
     modified_at: Optional[datetime] = Field(default=datetime.now(), nullable=False)
     deleted_at: Optional[datetime] = Field(default=None, nullable=True)
 
-    # TODO: Add Relation on credential table
+    credentials: list["Credential"] = Relationship(back_populates="domain")  # parent

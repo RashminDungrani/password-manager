@@ -11,6 +11,7 @@ def add_domain(
     domain_url: str = typer.Option(..., prompt=True, callback=validate_domain),
 ):
     DomainDAO().insert(domain_url)
+    typer.secho("Domain Added")
 
 
 @domain_app.command(name="del-all")

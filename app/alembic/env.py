@@ -98,10 +98,21 @@ async def run_migrations_online() -> None:
     In this scenario we need to create an Engine
     and associate a connection with the context.
     """
+    # * Don’t Generate Empty Migrations with Autogenerate from (https://alembic.sqlalchemy.org/en/latest/cookbook.html#don-t-generate-any-drop-table-directives-with-autogenerate)
+    def process_revision_directives(context, revision, directives):
+        if config.cmd_opts.autogenerate:  # type: ignore
+            script = directives[0]
+            if script.upgrade_ops.is_empty():
+                directives[:] = []
+
     connectable = create_engine(url=str(settings.db_url))
 
     with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
+        context.configure(
+            connection=connection,
+            target_metadata=target_metadata,
+            process_revision_directives=process_revision_directives,
+        )
 
         with context.begin_transaction():
             context.run_migrations()
