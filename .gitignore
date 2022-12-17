@@ -167,3 +167,4 @@ config.json
 z_notes.md
 
 sql_app.db
+creds.db

@@ -21,33 +21,18 @@ By utilizing a simple and minimal usage syntax, that requires a flat learning cu
 
 ## Installation
 
-- Python 3 or higher version supported
-
-```bash
-pip install -r requirements.txt
-```
-
-## Run
-
-```bash
-python run.py
-```
-
-----------
-#### alias pypasswords="PATH OF THE run.py" # set alias
-----------
+1. Install dependencies with poetry
+    ```bash
+    poetry install
+    ```
+1. Run DB migration
+    ```bash
+    alembic upgrade head
+    ```
+1. Start CLI app
+    ```bash
+    python -m app --help
+    ```
 
 ## Usage
-
-```
-   ____________________________________________________
-  |  keyword           | action                        |
-  |  -----------------------------------------------   |
-  |  view              | To view all Domain            |
-  |  view {domain}     | To view Spacific Domain       |
-  |  del  {domain->*}  | To detele domain              |
-  |  del  {domain->id} | To delete id pass from domain |
-  |  edit {domain->id} | To edit id and password       |
-  |  copy {domain->id} | to copy pass into clipboard   |
-  |____________________________________________________|
-```
+<!-- TODO -->
