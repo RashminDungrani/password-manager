@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "password-manager"
+version = "0.1.0"
+description = ""
+authors = ["Rashmin Dungrani <rashmin8248@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "password_manager"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = "^0.7.0"
+sqlmodel = "^0.0.8"
+rich = "^12.6.0"
+alembic = "^1.8.1"
+pydantic = {extras = ["dotenv", "email"], version = "^1.10.2"}
+validators = {extras = ["domain"], version = "^0.20.0"}
+yarl = "^1.8.1"
+pyperclip = "^1.8.2"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^0.991"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
